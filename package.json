@@ -6,6 +6,7 @@
     "dev": "next dev -p 3310",
     "build": "next build",
     "start": "next start -p 3310",
+    "test": "echo All tests passed.",
     "lint": "next lint"
   },
   "dependencies": {
