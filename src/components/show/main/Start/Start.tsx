@@ -61,6 +61,11 @@ export default function Start () {
       return
     }
 
+    if (!window.location.href.includes('localhost')) {
+      AppTools.message('This feature is not yet available to public network users.', 'warning')
+      return;
+    }
+
     let config = new CreateConfig()
     try {
       config.gameRound = parseInt(gameRound)
@@ -114,6 +119,11 @@ export default function Start () {
         return;
       }
       sid = existsSid
+    }
+
+    if (!window.location.href.includes('localhost')) {
+      AppTools.message('No records found for this ID.', 'warning')
+      return;
     }
 
     console.log('Continue session. Sid:' + sid)
