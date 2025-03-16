@@ -126,38 +126,42 @@ export default class DataService {
 
   static async simulateExample(sid: string) {
     Api.data.sid = sid
-    const data = await fetch('/data/' + sid + '.json').then(res => res.json())
+    const fullData = await fetch('/data/' + sid + '.json').then(res => res.json())
     let i = 0
     let interval = setInterval(() => {
       let num = Math.floor(Math.random() * 5) + 4
       for (let j = 0; j < num; j++) {
-        if (i >= simulateData.length) {
+        if (i >= fullData.length) {
+          console.log('Simulate Finished')
           this.analysis()
           clearInterval(interval)
           return
         }
         if (this.simulateStop) {
+          console.log('Simulate Stop')
           clearInterval(interval)
           break
         }
-        const data = simulateData[i]
-        if (data['source_character'] === 'C0001') {
-          data['source_character'] = 'Human'
-        }
-        if (data['target_character'] === 'C0001') {
-          data['target_character'] = 'Human'
-        }
+        const data = fullData[i]
+        // if (data['source_character'] === 'C0001') {
+        //   data['source_character'] = 'Human'
+        // }
+        // if (data['target_character'] === 'C0001') {
+        //   data['target_character'] = 'Human'
+        // }
         if (data['log_type']?.startsWith('Human')) {
           data['source_character'] = 'Human'
         }
         if (data['log_type'] === LogType.TurnChange) {
           data['args'] = data['args'].replaceAll('Turn', 'Round')
           data['log_content'] = String(data['log_content']).replaceAll('Turn', 'Round')
+          data['log_content'] = String(data['log_content']).replaceAll('Settlement Round (Cheating)', 'Cheating Round')
         }
         if (data['log_content'] === '这是人类，不需要Perceive' || data['log_content'] === '这是人类，不需要Think' || data['log_content'] === '这是人类，不需要反思') {
           i++
           continue
         }
+        console.log('Simulate Add:', data)
         this.checkAndAddToSourceData(data)
         Api.data.last = data['id']
         // if (Api.data.last == this.SIMULATE_STOP_AT) {
@@ -166,7 +170,7 @@ export default class DataService {
         i++
       }
       this.analysis()
-    }, 500)
+    }, 200)
   }
 
 
@@ -206,7 +210,7 @@ export default class DataService {
       let content = item['log_content']
       if (type == undefined) {
       } else if (type === LogType.TurnChange) {
-        let isSettlement = content.indexOf('Settlement') >= 0
+        let isSettlement = content.indexOf('Settlement') >= 0 || content.indexOf('Cheating') >= 0
         if (isSettlement) {
           this.data.rounds.push(Round.SettlementRound(content))
         } else {
@@ -358,7 +362,7 @@ export default class DataService {
       }
       this.usedIndex = i
     }
-    console.log('Analysis finished', JSON.parse(JSON.stringify(this.data.rounds)))
+    // console.log('Analysis finished', JSON.parse(JSON.stringify(this.data.rounds)))
   }
 
   static moveRelationUpdateBack() {

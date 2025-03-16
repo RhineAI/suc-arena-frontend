@@ -123,8 +123,8 @@ export default function Start () {
 
   let simulateList = [
     'Example Chat 1   —   2e295fa3cddd47e8bccbc377608cf179',
-    'Example Chat 2   —   be141b8d5e2c4befb34e2cf358dd705e',
-    'Example Chat 3   —   c81e3621c50640aba0aad3feae9dae7c',
+    'Example Chat 2   —   c81e3621c50640aba0aad3feae9dae7c',
+    'Example Chat 3   —   be141b8d5e2c4befb34e2cf358dd705e',
   ]
 
   return (

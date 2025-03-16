@@ -17,14 +17,22 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
     }
     data.push(line)
   }
+  let min = values[0].score
+  let max = values[0].score
   for (let i = 0; i < values.length; i++) {
     let v = values[i]
     let si = keys.indexOf(v.source)
     let ti = keys.indexOf(v.target)
     if (si >= 0 && ti >= 0) {
       data[si][ti] = v.score
+      min = Math.min(min, v.score)
+      max = Math.max(max, v.score)
     }
   }
+
+  const middle = (max + min) / 2
+  const scale = 100 / (max - min)
+  const bias = min
 
   function onFirstEnter() {
   }
@@ -50,9 +58,12 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
   let [hoverX, setHoverX] = React.useState<number>(-1)
   let [hoverY, setHoverY] = React.useState<number>(-1)
 
+  console.log(data)
   function color(value: number): string {
-    value = 100 - value
-    return `rgb(${value * 2.4}, ${value * 2.1 + 30}, ${value * 1.35 + 120})`
+    console.log(value)
+    if (value === -1) return 'rgb(232, 246, 255)'
+    const v = 1 - (value - bias) / 100 * scale
+    return `rgb(${v * 200 + 15}, ${v * 190 + 40}, ${v * 135 + 110})`
   }
   
   return (
@@ -130,15 +141,15 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
             data.map((line, index) => {
               return line.map((item, index2) => {
                 let useful = item != -1 && index != index2
-                if (index == index2) item = 5
                 return <div key={index + '-' + index2} className={clsx(styles.item, useful ? styles.useful : '')} style={{
                   top: index * size + 'px',
                   left: index2 * size + 'px',
                   width: size + 'px',
                   height: size + 'px',
                   lineHeight: size + 'px',
+                  fontWeight: 100,
                   backgroundColor: color(item),
-                  color: !useful ? '#999999' : '#000000',
+                  color: !useful ? '#999999' : item > middle ? '#ffffff' : '#000000',
                 }} onMouseEnter={e => {
                   setHoverX(index2)
                   setHoverY(index)

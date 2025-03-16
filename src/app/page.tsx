@@ -329,7 +329,7 @@ export default function Show() {
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
                           <img src={getPortraitByName(item.source)} alt='' style={{
-                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                            border: item.source === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <div className={clsx(styles.between)}>
@@ -339,7 +339,7 @@ export default function Show() {
                         </div>
                         <div className={clsx(styles.item, styles.to)}>
                           <img src={getPortraitByName(item.target)} alt='' style={{
-                            border: (item.target === 'Human' || item.target === 'C0001') ? '1px solid #666666' : ''
+                            border: item.target === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <span className={styles.space}></span>
@@ -360,7 +360,7 @@ export default function Show() {
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
                           <img src={getPortraitByName(item.source)} alt='' style={{
-                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                            border: item.source === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <div className={clsx(styles.between)}>
@@ -385,7 +385,7 @@ export default function Show() {
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
                           <img src={getPortraitByName(item.source)} alt='' style={{
-                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                            border: item.source === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <div className={clsx(styles.between)}>
@@ -438,7 +438,7 @@ export default function Show() {
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
                           <img src={getPortraitByName(item.source)} alt='' style={{
-                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                            border: item.source === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <div className={clsx(styles.between)}>
@@ -481,7 +481,7 @@ export default function Show() {
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
                           <img src={getPortraitByName(item.source)} alt='' style={{
-                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                            border: item.source === 'Human' ? '1px solid #666666' : ''
                           }}/>
                         </div>
                         <div className={clsx(styles.between)}>
