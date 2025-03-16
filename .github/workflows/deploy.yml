@@ -1,0 +1,49 @@
+name: Deploy to Aliyun ECS
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read  # 仅需读取仓库代码权限
+
+jobs:
+  Deploy:
+    name: Deploy to Aliyun ECS
+    runs-on: ubuntu-latest
+    steps:
+
+      # 1. 检出仓库代码
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. 设置 Node.js 环境
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      # 3. 安装依赖 & 构建
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      # 7. 执行全部单元测试
+      - name: Run Unit Tests
+        run: yarn test
+
+      # 8. 构建静态编译并导出
+      - name: Build Project
+        run: yarn build
+
+      # 9. 通过 SSH 上传到 ECS
+      - name: Upload to Aliyun Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.ECS_HOST }}
+          username: ${{ secrets.ECS_USER }}
+          password: ${{ secrets.ECS_PASSWORD }}
+          source: "out/"
+          target: "/root/fdu/suc-arena"
+          rm: true
