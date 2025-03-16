@@ -9,7 +9,7 @@ import Round from "@/app/service/class/round";
 export default class DataService {
   
   // static SIMULATE_STOP_AT = 36  // Human Choosing
-  static SIMULATE_STOP_AT = 42  // Human Speaking
+  // static SIMULATE_STOP_AT = 42  // Human Speaking
   
   static simulateStop = false
 
@@ -124,6 +124,51 @@ export default class DataService {
     })
   }
 
+  static async simulateExample(sid: string) {
+    Api.data.sid = sid
+    const data = await fetch('/data/' + sid + '.json').then(res => res.json())
+    let i = 0
+    let interval = setInterval(() => {
+      let num = Math.floor(Math.random() * 5) + 4
+      for (let j = 0; j < num; j++) {
+        if (i >= simulateData.length) {
+          this.analysis()
+          clearInterval(interval)
+          return
+        }
+        if (this.simulateStop) {
+          clearInterval(interval)
+          break
+        }
+        const data = simulateData[i]
+        if (data['source_character'] === 'C0001') {
+          data['source_character'] = 'Human'
+        }
+        if (data['target_character'] === 'C0001') {
+          data['target_character'] = 'Human'
+        }
+        if (data['log_type']?.startsWith('Human')) {
+          data['source_character'] = 'Human'
+        }
+        if (data['log_type'] === LogType.TurnChange) {
+          data['args'] = data['args'].replaceAll('Turn', 'Round')
+          data['log_content'] = String(data['log_content']).replaceAll('Turn', 'Round')
+        }
+        if (data['log_content'] === '这是人类，不需要Perceive' || data['log_content'] === '这是人类，不需要Think' || data['log_content'] === '这是人类，不需要反思') {
+          i++
+          continue
+        }
+        this.checkAndAddToSourceData(data)
+        Api.data.last = data['id']
+        // if (Api.data.last == this.SIMULATE_STOP_AT) {
+        //   this.simulateStop = true
+        // }
+        i++
+      }
+      this.analysis()
+    }, 500)
+  }
+
 
   static simulate() {
     Api.data.sid = 'local-data-sid'
@@ -142,9 +187,9 @@ export default class DataService {
         }
         this.checkAndAddToSourceData(simulateData[i])
         Api.data.last = simulateData[i]['id']
-        if (Api.data.last == this.SIMULATE_STOP_AT) {
-          this.simulateStop = true
-        }
+        // if (Api.data.last == this.SIMULATE_STOP_AT) {
+        //   this.simulateStop = true
+        // }
         i++
       }
       this.analysis()

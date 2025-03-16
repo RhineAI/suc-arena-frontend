@@ -258,7 +258,7 @@ export default function Show() {
               <span>{item.name}</span>
               <div className={styles.space}></div>
               {
-                item.progress && <span style={{fontWeight: 600, fontSize: '14px'}}>{item.progress}</span>
+                item.progress && <span style={{fontWeight: 400, fontSize: '14px', marginRight: '4px'}}>{item.progress}</span>
               }
               {
                 item.progressIcon && <Icon size={item.progressIconSize + 'px'}>{item.progressIcon}</Icon>
@@ -328,7 +328,9 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src={getPortraitByName(item.source)} alt=''/>
+                          <img src={getPortraitByName(item.source)} alt='' style={{
+                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -336,7 +338,9 @@ export default function Show() {
                           <span>{item.target}</span>
                         </div>
                         <div className={clsx(styles.item, styles.to)}>
-                          <img src={getPortraitByName(item.target)} alt=''/>
+                          <img src={getPortraitByName(item.target)} alt='' style={{
+                            border: (item.target === 'Human' || item.target === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <span className={styles.space}></span>
                         <div className={clsx(styles.tag)}>
@@ -355,7 +359,9 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src={getPortraitByName(item.source)} alt=''/>
+                          <img src={getPortraitByName(item.source)} alt='' style={{
+                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -378,7 +384,9 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src={getPortraitByName(item.source)} alt=''/>
+                          <img src={getPortraitByName(item.source)} alt='' style={{
+                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -429,7 +437,9 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src={getPortraitByName(item.source)} alt=''/>
+                          <img src={getPortraitByName(item.source)} alt='' style={{
+                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -470,7 +480,9 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src={getPortraitByName(item.source)} alt=''/>
+                          <img src={getPortraitByName(item.source)} alt='' style={{
+                            border: (item.source === 'Human' || item.source === 'C0001') ? '1px solid #666666' : ''
+                          }}/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>

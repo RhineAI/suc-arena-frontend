@@ -89,16 +89,6 @@ export default function Start () {
     })
   }
 
-  function simulate() {
-    if (Api.data.sid.length > 0) {
-      // AppTools.message('当前已有进行中的会话。', 'warning')
-      AppTools.message('The current session is in progress.', 'warning')
-      return
-    }
-
-    DataService.simulate()
-  }
-
   function continueSession(sid = '', simulate = false) {
     if (Api.data.sid.length > 0) {
       // AppTools.message('当前已有进行中的会话。', 'warning')
@@ -108,6 +98,12 @@ export default function Start () {
 
     if (sid.startsWith('Local')) {
       DataService.simulate()
+      return;
+    }
+
+    if (sid.startsWith('Example')) {
+      sid = sid.split('—')[1].trim()
+      DataService.simulateExample(sid)
       return;
     }
 
@@ -126,9 +122,9 @@ export default function Start () {
   }
 
   let simulateList = [
-    '2e295fa3cddd47e8bccbc377608cf179',
-    'be141b8d5e2c4befb34e2cf358dd705e',
-    'Local Test Data',
+    'Example Chat 1   —   2e295fa3cddd47e8bccbc377608cf179',
+    'Example Chat 2   —   be141b8d5e2c4befb34e2cf358dd705e',
+    'Example Chat 3   —   c81e3621c50640aba0aad3feae9dae7c',
   ]
 
   return (
@@ -151,18 +147,34 @@ export default function Start () {
         {/*</div>*/}
       </div>
       <h1>Start Config</h1>
-      <md-filled-text-field label="Game Round" value={gameRound} onInput={(e: any) => setGameRound(e.target.value)}
-                            type='number' size='large'></md-filled-text-field>
+      <md-filled-text-field
+        label="Game Round"
+        value={gameRound}
+        onInput={(e: any) => setGameRound(e.target.value)}
+        type='number'
+        size='large'
+      ></md-filled-text-field>
       <div className={styles.fieldLine}>
-        <md-filled-text-field label="Private Chat Round" value={battleChatRound}
-                              onInput={(e: any) => setBattleChatRound(e.target.value)} type='number'
-                              size='large'></md-filled-text-field>
-        <md-filled-text-field label="Meeting Chat Round" value={collaborationChatRound}
-                              onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number'
-                              size='large'></md-filled-text-field>
-        <md-filled-text-field label="Group Chat Round" value={groupChatRound}
-                              onInput={(e: any) => setGroupChatRound(e.target.value)} type='number'
-                              size='large'></md-filled-text-field>
+        <md-filled-text-field
+          label="Private Chat Round" value={battleChatRound}
+          onInput={(e: any) => setBattleChatRound(e.target.value)}
+          type='number'
+          size='large'
+        ></md-filled-text-field>
+        <md-filled-text-field
+          label="Meeting Chat Round"
+          value={collaborationChatRound}
+          onInput={(e: any) => setCollaborationChatRound(e.target.value)}
+          type='number'
+          size='large'
+        ></md-filled-text-field>
+        <md-filled-text-field
+          label="Group Chat Round"
+          value={groupChatRound}
+          onInput={(e: any) => setGroupChatRound(e.target.value)}
+          type='number'
+          size='large'
+        ></md-filled-text-field>
       </div>
       <div className={clsx(styles.checkboxLine, 'line')}>
         <md-checkbox id="from-mode-checkbox" touch-target="wrapper" onInput={(e: any) => {
@@ -173,10 +185,19 @@ export default function Start () {
       <div className={styles.copyLine} style={loadPre ? {} : {
         height: 0,
       }}>
-        <md-filled-text-field label="Pre Session ID" value={preSid} onInput={(e: any) => setPreSid(e.target.value)}
-                              size='large'></md-filled-text-field>
-        <md-filled-text-field label="Before ID" value={preBeforeId} onInput={(e: any) => setPreBeforeId(e.target.value)}
-                              type='number' size='large'></md-filled-text-field>
+        <md-filled-text-field
+          label="Pre Session ID"
+          value={preSid}
+          onInput={(e: any) => setPreSid(e.target.value)}
+          size='large'
+        ></md-filled-text-field>
+        <md-filled-text-field
+          label="Before ID"
+          value={preBeforeId}
+          onInput={(e: any) => setPreBeforeId(e.target.value)}
+          type='number'
+          size='large'
+        ></md-filled-text-field>
       </div>
       <div className={styles.line} style={{marginTop: '10px'}}>
         <md-text-button trailing-icon style={{
